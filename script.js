@@ -27,6 +27,11 @@ async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
 
+    // Wake up the speech engine instantly on click to bypass browser autoplay blocks
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+    }
+
     // 1. Add User Message to UI
     appendMessage('user', text);
     userInput.value = '';
@@ -120,12 +125,13 @@ function formatText(text) {
 }
 
 // --- ORDIS VOICE ENGINE ---
-// We need to ensure voices are loaded (Chrome sometimes loads them asynchronously)
-let availableVoices = [];
+let availableVoices = window.speechSynthesis.getVoices(); // Try to grab them immediately
+
+// Also listen for when they finish loading in the background
 window.speechSynthesis.onvoiceschanged = () => {
     availableVoices = window.speechSynthesis.getVoices();
+    console.log("Voices loaded. Total voices available:", availableVoices.length);
 };
-
 function speakOrdis(text) {
     if (!('speechSynthesis' in window)) {
         console.warn("Text-to-speech not supported in this browser.");
