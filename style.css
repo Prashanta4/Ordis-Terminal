@@ -147,6 +147,14 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+.message.user {
+    flex-direction: row-reverse; /* Flips the avatar and text */
+    margin-left: auto; /* Pushes the whole block to the right */
+    background-color: rgba(40, 50, 80, 0.3); /* Slight blue tint for Operator */
+    border-radius: 10px 0px 10px 10px; /* Stylish Warframe-esque corners */
+    text-align: right; /* Aligns the text inside to the right */
+}
+
 .message .avatar {
     width: 30px;
     height: 30px;
@@ -158,6 +166,8 @@ body {
 }
 
 .message.user .avatar {
+    margin-left: 15px;
+    margin-right: 0;
     background-color: var(--accent);
 }
 
